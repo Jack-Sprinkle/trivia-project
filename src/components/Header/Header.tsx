@@ -4,30 +4,29 @@ import axios from 'axios';
 
 function Header() {
 
-    interface Category {
-        id: number;
+    interface ICategory {
+        id: string;
         title: string;
     }
 
-    const [categories, setCategories] = useState([])
+
+    const [categories, setCategories] = useState<ICategory[]>([])
     useEffect(() => {
         axios.get('https://jservice.io/api/categories/?count=100')
         .then(resp => {
-            const data = []
+            const data: ICategory[] = [];
             let count = 0;
             while(count < 15) {
                 const randomIndex = Math.floor(Math.random() * resp.data.length);
-                const randomCategory: Category = {
+                const randomCategory: ICategory = {
                     id: resp.data[randomIndex].id,
                     title: resp.data[randomIndex].title
                 }
                 data.push(randomCategory)
                 count += 1;
             }
+            setCategories(data)
 
-            // if (data.length === 15) {
-            //     setCategories(data)
-            // }
         }).catch(error => {
             console.error(error)
         })
@@ -44,9 +43,18 @@ function Header() {
     return (
         <header className='header'>
             <h1 className='header__heading'>Welcome to Jeopardy!</h1>
+            <h3 className='header__heading--small'>Pick your categories here!</h3>
+            <p className='header__instructions'>The list of categories will be random each time you visit the page, choose 6.</p>
             <form className='form'>
-                <h3 className='form__heading'>Pick your categories here!</h3>
-                <p className='form__instructions'>The list of categories will be random each time you visit the page, choose 6.</p>
+                {categories?.map((category) => {
+                    const {id, title} = category;
+                    return (
+                        <div className='form__input-container'>
+                            <label htmlFor={id} className='form__label'>{title}</label>
+                            <input type='radio' id={id} name={title} value={title} className='form__input'/>
+                        </div>
+                    )
+                })}
             </form>
         </header>
     );
