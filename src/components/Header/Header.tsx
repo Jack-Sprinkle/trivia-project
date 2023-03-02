@@ -5,8 +5,8 @@ import axios from 'axios';
 function Header() {
 
     interface ICategory {
-        id: string;
-        title: string;
+        id: string,
+        title: string
     }
 
 
@@ -55,6 +55,7 @@ function Header() {
                         </div>
                     )
                 })}
+                <button type='submit'>Submit</button>
             </form>
         </header>
     );
