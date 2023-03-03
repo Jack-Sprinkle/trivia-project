@@ -1,7 +1,7 @@
 import './App.scss'
 import Header from './components/Header/Header';
 import Questions from './components/Questions/Questions';
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 function App() {
 
   interface ISelected {
@@ -17,8 +17,15 @@ function App() {
       title: event.target.value,
       checked: true
     }
-    console.log(clicked)
+    setSelected([...selected, clicked])
   }
+
+  const handleSubmit = (event: FormEvent ) => {
+    event.preventDefault()
+    console.log(selected)
+  }
+
+  console.log(selected)
   
   return (
     <div className="App">

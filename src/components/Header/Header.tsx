@@ -1,8 +1,8 @@
 import './Header.scss';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function Header({handleClick} : {handleClick : any}) {
+function Header({handleClick} : {handleClick : any}, {handleSubmit} : {handleSubmit : any}) {
 
     interface ICategory {
         id: string,
@@ -43,7 +43,7 @@ function Header({handleClick} : {handleClick : any}) {
             <h1 className='header__heading'>Welcome to Jeopardy!</h1>
             <h3 className='header__heading--small'>Pick your categories here!</h3>
             <p className='header__instructions'>The list of categories will be random each time you visit the page, choose 6.</p>
-            <form className='form'>
+            <form className='form' onSubmit={() => handleSubmit()}>
                 {categories?.map((category, index) => {
                     const {id, title} = category;
                     return (
